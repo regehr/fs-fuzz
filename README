@@ -1,0 +1,20 @@
+This projects contains two little fuzzers:
+
+fd_fuzz is a single-threaded stress test for the UNIX file I/O layer
+
+file_fuzz is a single-threaded stress test for the C streams layer
+
+Both are intended to operate differentially: run them with the same
+seed on two different implementations and diff their output.
+
+Both tools contain a number of caveats and limitations and
+compile-time configuration options embedded in their source
+code. You'll want to read the code before using these. They are quick
+and dirty.
+
+Both tools are designed to be a bit conservative, avoiding areas of
+the respective standards that are highly underspecified. For example
+file_fuzz avoids opening two FILEs that refer to the same on-disk file
+because on some platforms (OS X in particular) there does not seem to
+be any way to sync up the cached file information with the on-dis
+information, rendering meaningful testing impossible.
