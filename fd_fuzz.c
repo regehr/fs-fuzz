@@ -7,6 +7,8 @@
 #include <sys/time.h>
 #include <stdio.h>
 #include <errno.h>
+#include <unistd.h>
+#include <stdlib.h>
 
 // TODO:
 // test dup dup2
@@ -290,9 +292,17 @@ void print_verbose(int which, const char *when) {
          (long long)((ret == 0) ? s.st_size : -1));
 }
 
-#include "random_seed.h"
-
+#ifdef RANDOM_SEED
 int main(void) {
+#else
+int main(int argc, char *argv[]) {
+  int RANDOM_SEED;
+  if (argc != 2) {
+    printf("either #define RANDOM_SEED to be the seed or else provide seed on command line\n");
+    exit(-1);
+  }
+  RANDOM_SEED = atoi(argv[1]);
+#endif
   printf("random seed = %d\n", RANDOM_SEED);
   _srand48(&rs, RANDOM_SEED);
   int i;
