@@ -26,7 +26,7 @@ static const int CALL_LINK = 0; // 1 is better
 
 static const int VERBOSE = 0;
 
-#include "rand48.c"
+#include "rand48.h"
 
 struct _rand48_state rs;
 
@@ -120,6 +120,8 @@ static void do_open(int which) {
   case 2:
     mode = O_RDWR;
     break;
+  default:
+    assert(0);
   }
   if (choose(2))
     mode |= O_APPEND;

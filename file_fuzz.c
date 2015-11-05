@@ -25,7 +25,7 @@ static const int MULTIPLE = 0;
 
 static const int VERBOSE = 0;
 
-#include "rand48.c"
+#include "rand48.h"
 
 struct _rand48_state rs;
 
@@ -94,7 +94,7 @@ static void do_fopen(int which) {
 
   char fn[30];
   sprintf(fn, "data-%d", n);
-  char *mode;
+  char *mode = 0;
   // FIXME -- should be choose(6) but append mode in POSIX is too screwed to test!
   switch (choose(4)) {
   case 0:
