@@ -25,6 +25,9 @@
 // fixing it)
 static const int MULTIPLE = 0;
 
+// WARNING: in addition to printing more information this flag can
+// change the behavior since it makes side-effecting calls; no way to
+// avoid this that I know of
 static const int VERBOSE = 0;
 
 #include "rand48.h"
