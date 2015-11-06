@@ -18,3 +18,7 @@ file_fuzz avoids opening two FILEs that refer to the same on-disk file
 because on some platforms (OS X in particular) there does not seem to
 be any way to sync up the cached file information with the on-dis
 information, rendering meaningful testing impossible.
+
+N.B. if you want to compare two different runs, the initial contents
+of the files data-0, data-1, etc. must be the same on both machines.
+These files need not exist.

@@ -15,8 +15,8 @@
 #define SEEK_MAX 100
 #define BUFLEN 100
 
-#define DISK_FILES 10
-#define OPEN_FILES 10
+#define DISK_FILES 5
+#define OPEN_FILES 5
 
 // multiple offsets into same file? 1 is better BUT there does not
 // appear to be a way to synchronize multiple file streams into the
@@ -274,6 +274,7 @@ static void do_fgetc(int which) {
       havec[which] = 0;
     }
   }
+  last_was_read[which] = 1;
 }
 
 static void do_ungetc(int which) {
@@ -286,6 +287,7 @@ static void do_ungetc(int which) {
       do_fgetc(which);
     }
   }
+  last_was_write[which] = 1;
 }
 
 void do_fseek(int which) {
@@ -330,14 +332,12 @@ void do_unlink(int which) {
          custom_strerror(errno));
 }
 
-#if 0
 void do_fflush(int which) {
   if (files[which]) {
     int res = fflush(files[which]);
-    printf("<<< fflush(%d) = %res, %s >>>\n", which, res, custom_strerror(errno));
+    printf("<<< fflush(%d) = %d, %s >>>\n", which, res, custom_strerror(errno));
   }
 }
-#endif
 
 void print_verbose(int which, const char *when) {
   if (files[which]) {
@@ -369,7 +369,7 @@ int main(int argc, char *argv[]) {
       print_verbose(i, "init");
   }
   for (i = 0; i < REPS; i++) {
-    unsigned op = choose(12);
+    unsigned op = choose(13);
     int which = choose(OPEN_FILES);
     if (VERBOSE)
       print_verbose(which, "before");
@@ -416,6 +416,9 @@ int main(int argc, char *argv[]) {
       do_ungetc(which);
       break;
     case 11:
+      do_ungetc(which);
+      break;
+    case 12:
       useless++;
       break;
     default:
