@@ -14,7 +14,7 @@
 // test dup dup2
 // test permissions
 
-#define REPS 5000
+#define REPS (5*1000*1000)
 
 #define SEEK_MAX 100
 #define BUFLEN 100

@@ -10,7 +10,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-#define REPS 3000000
+#define REPS (5*1000*1000)
 
 #define SEEK_MAX 100
 #define BUFLEN 100
