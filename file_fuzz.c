@@ -10,7 +10,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-#define REPS 3000
+#define REPS 3000000
 
 #define SEEK_MAX 100
 #define BUFLEN 100
@@ -340,16 +340,11 @@ void do_fflush(int which) {
 #endif
 
 void print_verbose(int which, const char *when) {
-  if (0) {
-    printf("<<< at %s size of %d is %ld >>>\n", when, which,
-           (long)get_size(which));
-  } else {
-    if (files[which]) {
-      long pos = ftell(files[which]);
-      printf("<<< at %s size of %d is %ld pos %ld eof %d error %d >>>\n",
-	     when, which, (long)get_size(which), pos, feof(files[which]),
-             ferror(files[which]));
-    }
+  if (files[which]) {
+    long pos = ftell(files[which]);
+    long size = get_size(which);
+    printf("<<< at %s size of %d is %ld pos %ld eof %d error %d >>>\n",
+	   when, which, size, pos, feof(files[which]), ferror(files[which]));
   }
 }
 
